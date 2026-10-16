@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learning Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F6F8; --sheet:#FFFFFF; --ink:#1D2433; --muted:#5E6679; --line:#DDE1E8;
+  --hi:#FFD23F; --hi-soft:rgba(255,210,63,.42); --blue:#2F4BB8; --red:#B42318; --green:#1F7A4D; --violet:#6941C6;
+  --sans:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --display:"Bricolage Grotesque","Atkinson Hyperlegible",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131A27; --sheet:#1A2233; --ink:#E4E8F0; --muted:#9AA3B8; --line:#2C3649;
+    --hi-soft:rgba(255,210,63,.24); --blue:#8FA8FF; --red:#FF8A7A; --green:#6FD3A0; --violet:#B69CFF;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131A27; --sheet:#1A2233; --ink:#E4E8F0; --muted:#9AA3B8; --line:#2C3649;
+  --hi-soft:rgba(255,210,63,.24); --blue:#8FA8FF; --red:#FF8A7A; --green:#6FD3A0; --violet:#B69CFF;
+}
+*{box-sizing:border-box}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(16px,5vw,48px) 80px}
+
+/* top bar */
+.top{display:flex;align-items:center;gap:12px;padding:20px 0;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);flex:1;min-width:0}
+.logo{display:grid;place-items:end end;width:40px;height:36px;background:var(--hi);color:#1D2433;font:800 14px/1 var(--display);padding:0 4px 4px 0;border-radius:3px;flex:none}
+.brand b{font:700 17px/1.1 var(--display)}
+.brand small{display:block;color:var(--muted);font-size:13px}
+button.ghost{background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:7px 12px;font:14px var(--sans);cursor:pointer;white-space:nowrap}
+button.ghost:hover{border-color:var(--ink)}
+
+/* hero */
+.hero{padding:56px 0 30px}
+.hero .k{font:13px var(--mono);color:var(--muted)}
+.hero h1{font:800 clamp(38px,7vw,74px)/.98 var(--display);margin:8px 0 18px;letter-spacing:-.02em}
+.hero h1 .mark{background:linear-gradient(transparent 55%,var(--hi) 55%,var(--hi) 92%,transparent 92%);padding:0 .08em}
+.hero p{max-width:62ch;font-size:19px;color:var(--muted);margin:0}
+.resume{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:22px}
+.resume[hidden]{display:none}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:8px;padding:11px 16px;font:700 15px var(--sans);text-decoration:none;cursor:pointer;border:1px solid var(--ink)}
+.btn.primary{background:var(--ink);color:var(--sheet)}
+.btn.secondary{background:transparent;color:var(--ink)}
+
+/* track picker */
+.pick-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:18px 0 14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+.pick-h h2{font:800 clamp(24px,3.2vw,32px)/1.15 var(--display);margin:0;letter-spacing:-.01em}
+.pick-h span{font:13px var(--mono);color:var(--muted)}
+.tracks{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.track{position:relative;display:flex;flex-direction:column;gap:10px;padding:22px;border:1px solid var(--line);border-radius:12px;background:var(--sheet);color:var(--ink);text-decoration:none;transition:border-color .15s,transform .15s}
+.track:hover{border-color:var(--ink);transform:translateY(-2px)}
+.track.complete{border-color:var(--green)}
+.track .tile{display:grid;place-items:end end;width:58px;height:52px;font:800 19px/1 var(--display);padding:0 6px 6px 0;border-radius:4px;color:#1D2433;background:var(--hi)}
+.track[data-t="frontend"] .tile{background:#FFD23F}
+.track[data-t="data"] .tile{background:#8FD3B6}
+.track[data-t="python"] .tile{background:#9FB6FF}
+.track .k{font:12px var(--mono);color:var(--muted)}
+.track b.t{font:800 26px/1.1 var(--display);letter-spacing:-.01em}
+.track .d{font-size:15px;color:var(--muted);line-height:1.5;margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 4px;padding:0;list-style:none}
+.chips li{font-size:12.5px;padding:2px 9px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--ink)}
+.track .grow{flex:1}
+.prog{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.pbar{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.pbar i{display:block;height:100%;width:0;background:var(--hi);transition:width .3s}
+.track .go{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px;padding-top:12px;border-top:1px dashed var(--line);font:700 15px var(--sans)}
+.track .go .arrow{font:700 18px var(--mono)}
+.track .badge{position:absolute;top:18px;right:18px;font:700 12px var(--sans);padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:var(--paper)}
+.track .badge.on{border-color:var(--green);color:var(--green)}
+
+/* helper */
+.help{margin-top:48px}
+.help h2{font:800 22px/1.2 var(--display);margin:0 0 4px}
+.help>p{margin:0 0 14px;color:var(--muted);font-size:15px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}
+.note{border-radius:8px;padding:14px 16px;border:1px solid var(--line);background:var(--sheet);font-size:15.5px}
+.note b{display:block;font:700 16px var(--display);margin-bottom:2px}
+.note.a{border-left:5px solid #E0B000}.note.b{border-left:5px solid var(--green)}.note.c{border-left:5px solid var(--blue)}
+.note a{font-weight:700}
+.stats{display:flex;flex-wrap:wrap;gap:22px;margin-top:40px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stats div{min-width:120px}
+.stats b{display:block;font:800 30px/1.1 var(--display)}
+.stats span{font-size:13px;color:var(--muted)}
+footer{margin-top:30px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer button{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font:13px var(--sans);padding:0}
+@media (max-width:600px){body{font-size:16px}.hero{padding-top:34px}.hero p{font-size:17px}.brand small{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="./"><span class="logo">LH</span><span><b>Learning Hub</b><small>Frontend · Data Analyst · Python</small></span></a>
+    <button class="ghost" id="themeBtn" type="button">Toggle theme</button>
+  </header>
+
+  <section class="hero" aria-labelledby="title">
+    <span class="k">Welcome<span id="hello"></span></span>
+    <h1 id="title">What do you want to <span class="mark">learn today?</span></h1>
+    <p>Pick a track. Each one is a full handbook with parts, topics, search, progress tracking and a study companion. You can switch tracks any time; progress in each one is saved separately in this browser.</p>
+    <div class="resume" id="resume" hidden>
+      <a class="btn primary" id="resumeBtn" href="#">Continue</a>
+      <span id="resumeText" style="color:var(--muted);font-size:14px"></span>
+    </div>
+  </section>
+
+  <div class="pick-h"><h2>Choose your learning</h2><span>3 tracks</span></div>
+  <div class="tracks" id="tracks"></div>
+
+  <div class="stats" id="stats"></div>
+
+  <section class="help">
+    <h2>Not sure which one?</h2>
+    <p>Start with the question you want to answer at work.</p>
+    <div class="grid3">
+      <div class="note a"><b>"I want to build websites and apps."</b>Go with <a href="frontend/index.html">Frontend</a>: HTML, CSS and JavaScript properly, then TypeScript, Vue, React and Next.js, testing, performance and system design.</div>
+      <div class="note b"><b>"I want to turn business data into decisions."</b>Go with <a href="data-analyst/index.html">Data Analyst</a>: SQL first, then Excel, then Power BI, with one practice dataset across all three.</div>
+      <div class="note c"><b>"I want to learn programming or crack coding rounds."</b>Go with <a href="python/index.html">Python</a>: the language from zero, then data structures and algorithms with code you run in the browser.</div>
+    </div>
+  </section>
+
+  <footer><span>Everything runs in your browser. Progress is stored locally, per track.</span><button id="resetHub" type="button">Forget my last track</button></footer>
+</div>
+
+<script>
+(function(){
+const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* each track keeps its own keys: <prefix>-done (finished topic ids), <prefix>-last (last topic), <prefix>-theme */
+const TRACKS=[
+ {id:'frontend',tile:'FE',href:'frontend/index.html',prefix:'feb',coach:'coach-v1',title:'Frontend',parts:24,kicker:'24 parts · 215 topics',
+  desc:'From developer to frontend engineer: rebuild the foundations, go deep on frameworks, then the mid-level layer interviews ask about.',
+  chips:['HTML & CSS','JavaScript','TypeScript','Vue','React','Next.js','Testing','System design'],topics:215},
+ {id:'data',tile:'DA',href:'data-analyst/index.html',prefix:'dab',coach:'dacoach-v1',title:'Data Analyst',parts:15,kicker:'15 parts · 92 topics',
+  desc:'From zero to job-ready data analyst: the three tools almost every analyst job asks for, in the order that makes each one easier.',
+  chips:['SQL','Excel','Power Query','Power BI','DAX','Statistics','Portfolio','Interviews'],topics:92},
+ {id:'python',tile:'PY',href:'python/index.html',prefix:'pyh',coach:'pycoach-v1',title:'Python',parts:14,kicker:'14 parts · 95 topics',
+  desc:'From your first print() to data structures and algorithms. Live code in the browser, quick checks and auto-checked problems.',
+  chips:['Basics','Loops & functions','Collections','OOP','Files & JSON','Deep dive','DSA','Problem sets'],topics:95}
+];
+
+/* theme: shared with every handbook so the choice follows you */
+const root=document.documentElement;
+const savedTheme=store.get('hub-theme',null);if(savedTheme)root.dataset.theme=savedTheme;
+$('#themeBtn').onclick=()=>{const dark=root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme=dark?'light':'dark';store.set('hub-theme',root.dataset.theme);TRACKS.forEach(t=>store.set(t.prefix+'-theme',root.dataset.theme))};
+
+/* name from any study companion that has one */
+const name=TRACKS.map(t=>store.get(t.coach,{}).name).find(Boolean);
+if(name)$('#hello').textContent=' back, '+name;
+
+function progress(t){const d=store.get(t.prefix+'-done',[]);const n=Array.isArray(d)?d.length:0;return Math.min(n,t.topics)}
+
+let totalDone=0;
+const host=$('#tracks');
+TRACKS.forEach(t=>{
+  const n=progress(t),pct=Math.round(n/t.topics*100),last=store.get(t.prefix+'-last',null);totalDone+=n;
+  const a=document.createElement('a');a.className='track'+(n>=t.topics?' complete':'');a.dataset.t=t.id;
+  a.href=t.href+(last?'#'+encodeURIComponent(last):'');
+  a.innerHTML=`<span class="badge${n?' on':''}">${n>=t.topics?'Completed':n?'In progress':'New'}</span>
+    <span class="tile">${t.tile}</span>
+    <span class="k">${esc(t.kicker)}</span>
+    <b class="t">${esc(t.title)}</b>
+    <p class="d">${esc(t.desc)}</p>
+    <ul class="chips">${t.chips.map(c=>`<li>${esc(c)}</li>`).join('')}</ul>
+    <span class="grow"></span>
+    <span class="prog"><span>${n}/${t.topics} topics</span><span class="pbar"><i style="width:${pct}%"></i></span><span>${pct}%</span></span>
+    <span class="go"><span>${n?'Continue learning':'Start '+esc(t.title)}</span><span class="arrow">→</span></span>`;
+  a.addEventListener('click',()=>store.set('hub-last',t.id));
+  host.appendChild(a);
+});
+
+/* resume the last track you opened */
+const lastId=store.get('hub-last',null),lt=TRACKS.find(t=>t.id===lastId);
+if(lt){const last=store.get(lt.prefix+'-last',null);
+  $('#resume').hidden=false;$('#resumeBtn').textContent='Continue '+lt.title;
+  $('#resumeBtn').href=lt.href+(last?'#'+encodeURIComponent(last):'');
+  $('#resumeText').textContent=`${progress(lt)} of ${lt.topics} topics done`;}
+$('#resetHub').onclick=()=>{try{localStorage.removeItem('hub-last')}catch(e){}$('#resume').hidden=true};
+
+const all=TRACKS.reduce((s,t)=>s+t.topics,0);
+$('#stats').innerHTML=`<div><b>3</b><span>learning tracks</span></div><div><b>${TRACKS.reduce((s,t)=>s+t.parts,0)}</b><span>parts</span></div><div><b>${all}</b><span>topics</span></div><div><b>${totalDone}</b><span>topics you've finished</span></div>`;
+})();
+</script>
+</body>
+</html>
