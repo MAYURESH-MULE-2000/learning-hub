@@ -1,0 +1,50 @@
+
+/* ===================== Python lab (editor, quizzes, visualizers, practice) ===================== */
+/* PyPrime tokens mapped onto the handbook palette, so light and dark themes follow the handbook */
+:root{
+  --bg:var(--paper);--panel:var(--sheet);--panel2:var(--paper);--text:var(--ink);--border:var(--line);
+  --accent:var(--blue);--accent-2:var(--hi);--accent-soft:color-mix(in srgb,var(--blue) 10%,var(--sheet));
+  --good:var(--green);--bad:var(--red);
+  --goodbg:color-mix(in srgb,var(--green) 12%,var(--sheet));--badbg:color-mix(in srgb,var(--red) 10%,var(--sheet));--warnbg:var(--hi-soft);
+  --shadow:none;--ed:var(--code-bg);--ed2:color-mix(in srgb,#000 22%,var(--code-bg));--edtext:var(--code-ink);
+}
+.tk{color:var(--tk-kw)}.ts{color:var(--tk-str)}.tc{color:var(--tk-com);font-style:italic}.tn{color:var(--tk-num)}.tb{color:var(--tk-fn)}.td{color:var(--tk-tag)}
+.lesson{max-width:72ch}
+.topic .lesson p,.topic .lesson ul,.topic .lesson ol{max-width:72ch}
+.callout{border-radius:8px;padding:12px 16px;margin:16px 0;border:1px solid var(--line);border-left:5px solid var(--blue);background:var(--sheet);max-width:72ch}
+.callout.warn{border-left-color:var(--red)}
+.callout.analogy{border-left-color:var(--green)}
+.callout:not(.tip):not(.warn):not(.analogy){border-left-color:var(--violet)}
+.callout b:first-child{font-family:var(--display)}
+.lab-hint{color:var(--muted);font-size:15px;margin:0 0 4px}
+.lab-hint kbd{font-size:11px}
+.qscore{font:600 12.5px var(--sans);padding:2px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);vertical-align:middle;margin-left:6px}
+.qscore.full{border-color:var(--green);color:var(--green)}
+.lab-ph{min-height:120px;border-radius:10px;background:var(--code-bg);opacity:.6}
+.setbar{display:flex;align-items:center;gap:12px;max-width:520px;font-size:14px;color:var(--muted);margin:10px 0 6px}
+.setbar .pbar{flex:1}
+.lab .btn{font-family:var(--sans)}
+.lab .btn.ghost{border-color:var(--line)}
+.lab .btn.ghost:hover{border-color:var(--ink);background:var(--sheet)}
+.lab .qz{border-radius:10px;max-width:80ch}
+.lab .opt{border-radius:8px;font-size:14px}
+.lab .qcard{border-radius:10px;max-width:none}
+.lab.qcard{border:1px solid var(--line);background:var(--sheet);border-radius:10px;padding:18px 18px 10px;margin:18px 0;scroll-margin-top:24px}
+.lab.qcard.solved{border-color:var(--green)}
+.lab .qnum{background:var(--hi);color:#1D2433;border-radius:3px;font:700 13px var(--mono);padding:4px 8px 3px;transform:rotate(-2deg);display:inline-block}
+.lab .tag{border:1px solid var(--line);background:var(--paper);font-weight:400;font-size:12.5px}
+.lab .qtext code,.lab .why code{overflow-wrap:anywhere}
+.lab details.q{max-width:none}
+.lab .widget{border-radius:10px}
+.lab .editor{border-radius:10px;border-color:color-mix(in srgb,#fff 8%,var(--code-bg))}
+.lab .solved-lbl{font-weight:700}
+.pystat{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:8px;padding:0 4px}
+.pystat i{width:8px;height:8px;border-radius:50%;background:var(--muted);display:inline-block;flex:none}
+.pystat.loading i{background:#F59E0B;animation:pulse 1s infinite}
+.pystat.ready i{background:#22C55E}.pystat.error i{background:#EF4444}
+@keyframes pulse{50%{opacity:.3}}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--sheet);padding:10px 18px;border-radius:10px;font-size:14px;font-weight:700;opacity:0;transition:.25s;z-index:95;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.hubback{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;color:var(--muted);text-decoration:none;padding:2px 0}
+.hubback:hover{color:var(--ink)}
+@media print{.lab .editor,.lab .widget,.pystat{display:none!important}}
